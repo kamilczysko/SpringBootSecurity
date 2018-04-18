@@ -34,17 +34,24 @@ public class User {
 		this.password = password;
 	}
 	
+	public User(String firstName, String secondName, String mail, Role role, String password, boolean banned){
+		this.firstName = firstName;
+		this.secondName = secondName;
+		this.mail= mail;
+		this.role = role;
+		this.password = password;
+		this.banned = banned;
+	}
+	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public long id;
 
 	@NotNull
-	@Column(unique=true)
 	private String firstName;
 
 	@NotNull
-	@Column(unique=true)
 	private String secondName;
 	
 	@Email
@@ -56,10 +63,17 @@ public class User {
 	public String password;
 	
 	@NotNull
-	private boolean banned = false;
+	public boolean banned = false;
 	
 	@OneToOne
 	public Role role;
 	
+	@Transient
+	@Autowired
+	private BCryptPasswordEncoder ncr;
+	
+	public void setPassword(String pass){
+		this.password = ncr.encode(pass);
+	}
 	
 }

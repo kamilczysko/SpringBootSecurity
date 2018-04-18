@@ -26,10 +26,12 @@ public class UserServiceImplementation implements UserDetailsService {
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet();
 
-//		System.out.println("rola: "+user.role.toString()+" -- "+user.mail);
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+user.role.toString()));
+		// System.out.println("rola: "+user.role.toString()+" -- "+user.mail);
+		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + user.role.toString()));
 
-		return new org.springframework.security.core.userdetails.User(user.mail, user.password,
-				grantedAuthorities);
+		org.springframework.security.core.userdetails.User userToLogin = new org.springframework.security.core.userdetails.User(
+				user.mail, user.password, true, true, true, !user.banned, grantedAuthorities);
+
+		return userToLogin;
 	}
 }
