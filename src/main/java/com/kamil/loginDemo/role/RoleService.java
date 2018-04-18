@@ -11,7 +11,6 @@ public class RoleService {
 	@Autowired
 	private RoleRepository roleRepo;
 	
-	@Transactional
 	public Role insertRole(String role){
 		return roleRepo.save(new Role(role));
 	}
