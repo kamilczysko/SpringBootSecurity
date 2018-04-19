@@ -15,12 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.kamil.loginDemo.role.Role;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 @Entity
 public class User {
 
@@ -49,10 +43,10 @@ public class User {
 	public long id;
 
 	@NotNull
-	private String firstName;
+	public String firstName;
 
 	@NotNull
-	private String secondName;
+	public String secondName;
 	
 	@Email
 	@NotNull
