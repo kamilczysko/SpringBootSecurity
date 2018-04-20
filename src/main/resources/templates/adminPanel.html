@@ -60,48 +60,64 @@
         <tr>
             <th>First name</th>
             <th>Second name</th>
+            <th>E-mail</th>
             <th>Banned</th>
             <th>Role</th>
             
         </tr>
     </thead>
-    <!--Table head-->
 
-    <!--Table body-->
     <tbody>
-    <a th:text="${principal}">asdasdasds</a>
+    
+    
         <tr th:each="user : ${users}">
-	        <td th:text="${user.firstName}">1</td>
-	        <td><a href="#" th:text="${user.secondName}"></a></td>
-	        
-<!-- 	        <td th:text="${user.banned}">Text ...</td> -->
-	        <!-- IF CUSTOMER IS ANONYMOUS -->
-			 
-	        <td>
-<!-- 	        	<a th:if="${user.name ==  #authorization.expression('name')}"> dupa</a> -->
-	        		
-					<a th:if="${user.banned}">
+        
+	    	<a th:if="${#strings.toString(user.id) !=  #strings.substringBefore(#authentication.name, '#')}">
+
+	    
+		        <td th:text="${user.firstName}">1</td>
+		        <td th:text="${user.secondName}">1</td>
+				<td th:text="${user.mail}">1</td> 
+		        <td>
+		        		
+						<a th:if="${user.banned}">
+								<form method="POST" th:action="@{/ban}">
+									<input type="hidden" name="userid" id="userid"
+										th:value="${user.id}" />
+									<button type="submit" name="submit" value="value" class="btn btn-link" style="background: transparent;">
+									<a th:if="${user.banned}" style="weight:bold; color:red;"> Banned</a>
+									</button>
+								</form>
+						</a>
+						<a th:unless="${user.banned}">
 							<form method="POST" th:action="@{/ban}">
-								<input type="hidden" name="userid" id="userid"
-									th:value="${user.id}" />
-								<button type="submit" name="submit" value="value" class="btn btn-link" style="background: transparent;">
-								<a th:if="${user.banned}" style="weight:bold; color:red;"> Banned</a>
-								</button>
-							</form>
+									<input type="hidden" name="userid" id="userid"
+										th:value="${user.id}" />
+									<button type="submit" name="submit" value="value" class="btn btn-link" style="background: transparent;">
+										<a style="color:green;">OK</a>
+									</button>
+								</form>
+										
+				
+				
+						</a>
+				</td>
+
+
+				<td>
+<!-- 				 th:text="${user.role}" -->
+				<form value="${user.id}" action="/change" method="post">
+				
+					<a th:if="${#strings.toString(user.role) == #strings.toString('ADMIN')}">
+						<input type="checkbox" th:value="${user.id}" th:checked="${true}" />	
 					</a>
-					<a th:unless="${user.banned}">
-						<form method="POST" th:action="@{/ban}">
-								<input type="hidden" name="userid" id="userid"
-									th:value="${user.id}" />
-								<button type="submit" name="submit" value="value" class="btn btn-link" style="background: transparent;">
-									<a style="color:green;">OK</a>
-								</button>
-							</form>
-									
-					</a>
-							
-			</td>
-	        <td th:text="${user.role}"></td>
+					<a th:if="${#strings.toString(user.role) == #strings.toString('USER')}">
+						<input type="checkbox" th:value="${user.id}" th:checked="${false}" />	
+					</a>				 
+				</form>
+				
+				</td>
+			</a>
     	</tr>
        
     </tbody>

@@ -8,11 +8,16 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kamil.loginDemo.role.RoleService;
+
 @Service
 public class UserService {
 
 	@Autowired
 	public UserRepository userRepo;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	@Transactional
 	public User insertUser(User user){
@@ -33,6 +38,12 @@ public class UserService {
 		User user = usr.get();
 		user.banned = !user.banned;
 		userRepo.save(user);
+	}
+		
+	public User registerNewUser(User user){
+		System.out.println("register new user");
+		user.setRole(roleService.getRole("USER"));
+		return userRepo.save(user);
 	}
 	
 }

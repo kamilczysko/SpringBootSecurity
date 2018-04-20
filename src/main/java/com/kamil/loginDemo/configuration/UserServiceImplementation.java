@@ -3,8 +3,6 @@ package com.kamil.loginDemo.configuration;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,23 +21,25 @@ public class UserServiceImplementation implements UserDetailsService {
 	private UserService userService;
 
 
-    @Autowired
-    private HttpSession httpSession;
+//    @Autowired
+//    private HttpSession httpSession;
     
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user = userService.getUserByEmail(email);
 
+		if(user == null)
+			return null;
 		Set<GrantedAuthority> grantedAuthorities = new HashSet();
 
 		// System.out.println("rola: "+user.role.toString()+" -- "+user.mail);
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + user.role.toString()));
 
 		org.springframework.security.core.userdetails.User userToLogin = new org.springframework.security.core.userdetails.User(
-				user.firstName+" "+user.secondName, user.password, true, true, true, !user.banned, grantedAuthorities);
+				user.id + "#"+user.firstName+" "+user.secondName, user.getPassword(), true, true, true, !user.banned, grantedAuthorities);
 
-		httpSession.setAttribute("CURRENT_USER", user);
+//		httpSession.setAttribute("CURRENT_USER", user);
 		
 		return userToLogin;
 	}
