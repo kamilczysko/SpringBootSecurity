@@ -30,12 +30,12 @@ public class Init implements CommandLineRunner{
 		Role admin = roleService.insertRole("ADMIN");
 		Role user = roleService.insertRole("USER");
 		
-		userService.insertUser(new User("kamil", "walczak", "dupa@dupa.pl", admin, passEncoder.encode("asd")));
-		userService.insertUser(new User("marek", "warek", "pupka@dupa.pl", admin, passEncoder.encode("asd")));
+		userService.insertUser(new User("kamil", "walczak", "b@b.pl", admin, passEncoder.encode("asd")));
+		userService.insertUser(new User("marek", "warek", "a@a.pl", admin, passEncoder.encode("asd")));
 
-		userService.insertUser(new User("cfel", "warek", "ban@ban.pl", admin, passEncoder.encode("asd"), true));
-		userService.insertUser(new User("jelcz", "sutek", "asd@dupa.pl", user, passEncoder.encode("asd")));
-		userService.insertUser(new User("makaron", "erwer", "asdxxa@adupa.pl", user, passEncoder.encode("asd")));
+		userService.insertUser(new User("casdl", "warek", "ban@ban.pl", admin, passEncoder.encode("asd"), true));
+		userService.insertUser(new User("jelcz", "asdd", "asd@dupa.pl", user, passEncoder.encode("asd")));
+		userService.insertUser(new User("makaron", "erwer", "asdxxa@a.pl", user, passEncoder.encode("asd")));
 		
 		
 	}
