@@ -87,6 +87,7 @@ class MainController {
 		User user = userService.getUserById(Integer.parseInt(principal.getName().split("#")[0]));
 		model.addAttribute("userPosts", postService.getUsersPosts(user));
 		model.addAttribute("post", new Post(user));
+		model.addAttribute("editpost", new Post());
 		model.addAttribute("user", user);
 		return "myblog";
 	}
@@ -108,8 +109,10 @@ class MainController {
 		return "profile";
 	}
 	
-	
-	
-	
-	
+	@RequestMapping(value="/editpost", method=RequestMethod.POST, params="action=remove")
+	public String removePost(@ModelAttribute("postid") Long post){
+		postService.removeById(post);
+		return "redirect:/myblog";
+	}
+		
 }

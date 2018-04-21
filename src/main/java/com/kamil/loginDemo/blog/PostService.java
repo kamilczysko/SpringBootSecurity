@@ -14,6 +14,7 @@ public class PostService {
 	private PostRepo postRepo;
 	
 	public void removePost(Post post){
+		System.out.println("deletingg post: "+post.id+" - "+post.content);
 		postRepo.delete(post);
 	}
 	
@@ -27,6 +28,10 @@ public class PostService {
 	
 	public List<Post> getAllPosts(){
 		return (List<Post>) postRepo.findAll();
+	}
+	
+	public void removeById(Long id){
+		postRepo.deleteById(id);
 	}
 	
 }

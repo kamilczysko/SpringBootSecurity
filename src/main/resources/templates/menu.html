@@ -4,12 +4,9 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 
-
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<title>Sign in demo!</title>
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -28,7 +25,7 @@
 	<header>
 		<!-- Fixed navbar -->
 		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-			<a class="navbar-brand" href="#">Home</a>
+			<a class="navbar-brand" href="#">Menu</a>
 
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarCollapse" aria-controls="navbarCollapse"
@@ -42,21 +39,21 @@
 						<li class="nav-item"><a class="nav-link" href="/admin">Admin
 								panel</a></li>
 					</div>
+					<li class="nav-item">
+              			<a class="nav-link" href="/">Go home</a>
+            		</li>
 					<div sec:authorize="!isAuthenticated()">
 						<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-					</div>
-	
-					<div sec:authorize="isAuthenticated()">
-						<li class="nav-item"><a class="nav-link" href="/myblog">My blog</a></li>
-					</div>
-					
-					<div sec:authorize="!isAuthenticated()">
-						<li class="nav-item"><a class="nav-link disabled"
-							href="/registerform">Register</a></li>
 					</div>
 
 					<div sec:authorize="isAuthenticated()">
 						<li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+					</div>
+
+					
+					<div sec:authorize="!isAuthenticated()">
+						<li class="nav-item"><a class="nav-link disabled"
+							href="/registerform">Register</a></li>
 					</div>
 				</ul>
 	
@@ -70,48 +67,6 @@
 			</div>
 		</nav>
 	</header>
-
-
-	<!-- Begin page content -->
-	<main role="main" class="container">
-		
-		<h1 class="mt-5">Simple page</h1>
-		<div sec:authorize="isAuthenticated()">
-			Welcome <span th:text="${#strings.substringAfter(#authentication.name, '#')}"></span>
-		</div>
-		<div sec:authorize="!isAuthenticated()">Herzlich willkommen unknown</div>
-		<p class="lead">Do something. Search doesn't work :( Such a pitty.
-			Just kidding. I'm too lazy to make it.</p>
-		<div>
-<!-- 	<table> -->
-	<hr size=5>
-		<a th:each="post : ${userPosts}" th:remove="tag">
-			<div>
-				<h5 th:text="${post.title}">...</h5>
-				<p th:text="${post.content}">...</p>
-				Written by <b><a th:text="${post.author.firstName}"></a></b> at <a th:text="${post.created}"></a> 
-<!-- 				<p th:text="${'Written by '+ post.author.firstName+' at ' + post.created }">...</p> -->
-				<hr>
-			</div>
-		</a>
-<!-- 	</table> -->
-</div>
-	</main>
-	
-			
-				
-				
-				
-<!-- 			<div th:text="${#strings.substringBefore(#authentication.name, '#')}">The value of the "name" property of the authentication object should appear here.</div> -->
-
-
-
-	<footer class="footer">
-		<div class="container">
-			<span class="text-muted">Dupa dupa</span>
-		</div>
-	</footer>
-
 
 </body>
 </html>

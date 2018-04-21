@@ -1,7 +1,9 @@
 package com.kamil.loginDemo;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +23,10 @@ public class Init implements CommandLineRunner{
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
 	
+
 	@Override
 	public void run(String... args) throws Exception {
+		
 		Role admin = roleService.insertRole("ADMIN");
 		Role user = roleService.insertRole("USER");
 		
