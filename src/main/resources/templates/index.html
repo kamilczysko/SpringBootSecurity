@@ -84,17 +84,32 @@
 			Just kidding. I'm too lazy to make it.</p>
 		<div>
 <!-- 	<table> -->
-	<hr size=5>
-		<a th:each="post : ${userPosts}" th:remove="tag">
-			<div>
+	<hr>
+	<table class="table table-striped table-responsive-md btn-table">
+
+    <tbody>
+    
+       	<tr th:each="post : ${userPosts}" >
+			<td>
 				<h5 th:text="${post.title}">...</h5>
 				<p th:text="${post.content}">...</p>
 				Written by <b><a th:text="${post.author.firstName}"></a></b> at <a th:text="${post.created}"></a> 
-<!-- 				<p th:text="${'Written by '+ post.author.firstName+' at ' + post.created }">...</p> -->
-				<hr>
-			</div>
-		</a>
-<!-- 	</table> -->
+					
+			</td>
+			
+			<td>
+				<div sec:authorize="hasRole('ROLE_ADMIN')">
+				<form th:action="@{/removefrommainpage}" method="post">
+					<input type="hidden" th:id="postid" th:name="postid" th:value="${post.id}">
+				     <button type="submit" name="action" value="remove">remove</button>
+				</form>
+				</div>
+			</td>
+			
+    	</tr>
+    </tbody>
+</table>
+		
 </div>
 	</main>
 	

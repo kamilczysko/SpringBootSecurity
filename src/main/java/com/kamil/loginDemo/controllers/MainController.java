@@ -114,5 +114,10 @@ class MainController {
 		postService.removeById(post);
 		return "redirect:/myblog";
 	}
-		
+	
+	@RequestMapping(value="/removefrommainpage", method=RequestMethod.POST)
+	public String removePostFromMainPage(@ModelAttribute("postid") Long post){
+		postService.removeById(post);
+		return "redirect:/";
+	}
 }
