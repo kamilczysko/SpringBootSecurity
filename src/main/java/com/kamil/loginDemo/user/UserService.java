@@ -32,6 +32,10 @@ public class UserService {
 		return (List<User>) userRepo.findAll();
 	}
 	
+	public User getUserById(long id){
+		return userRepo.findById(id).get();
+	}
+	
 	
 	public void ban(long id){
 		Optional<User> usr = userRepo.findById(id);

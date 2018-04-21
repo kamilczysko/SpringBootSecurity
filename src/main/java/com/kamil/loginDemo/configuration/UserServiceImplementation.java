@@ -31,7 +31,7 @@ public class UserServiceImplementation implements UserDetailsService {
 
 		if(user == null)
 			return null;
-		Set<GrantedAuthority> grantedAuthorities = new HashSet();
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
 
 		// System.out.println("rola: "+user.role.toString()+" -- "+user.mail);
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + user.role.toString()));

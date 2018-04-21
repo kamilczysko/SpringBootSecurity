@@ -1,17 +1,18 @@
 package com.kamil.loginDemo.controllers;
 
 import java.security.Principal;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kamil.loginDemo.blog.Post;
+import com.kamil.loginDemo.blog.PostService;
 import com.kamil.loginDemo.role.RoleService;
 import com.kamil.loginDemo.user.User;
 import com.kamil.loginDemo.user.UserService;
@@ -26,8 +27,8 @@ class MainController {
 	
 	
 	@RequestMapping("/")
-	private String index(){
-//		model.addAttribute("name", name);
+	private String index(Model model){
+		model.addAttribute("userPosts", postService.getAllPosts());
 		return "index";
 	}
 	
@@ -70,15 +71,45 @@ class MainController {
 		return "adminPanel";
 	}
 	
-	@Autowired
-	private BCryptPasswordEncoder passEncoder;
+//	@Autowired
+//	private BCryptPasswordEncoder passEncoder;
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String dupa(@ModelAttribute User user){
-			
-		User savedUser = userService.registerNewUser(user);
-		return "index";
+	public String registerUser(@ModelAttribute User user){
+		userService.registerNewUser(user);
+		return "redirect:/index";
 	}
+	
+	@Autowired PostService postService;
+	
+	@RequestMapping(value="/myblog")
+	public String myBlog(Model model, Principal principal){
+		User user = userService.getUserById(Integer.parseInt(principal.getName().split("#")[0]));
+		model.addAttribute("userPosts", postService.getUsersPosts(user));
+		model.addAttribute("post", new Post(user));
+		model.addAttribute("user", user);
+		return "myblog";
+	}
+	
+	@RequestMapping(value="/myblog", method=RequestMethod.POST)
+	public String saveMyPost(Model model, Principal principal, @ModelAttribute Post post){
+		User user = userService.getUserById(Integer.parseInt(principal.getName().split("#")[0]));
+		System.out.println(postService.getUsersPosts(user));
+		System.out.println("POSTTTT: "+post.getContent()+" -- "+post.getTitle()+" = "+post.getAuthor().getFirstName()+" -- "+post.created);
+		post.setCreated(new Date());
+		postService.savePost(post);
+		model.addAttribute("userPosts", postService.getUsersPosts(user));
+		return "redirect:/myblog";
+	}
+	
+	@RequestMapping(value="/updateuser", method=RequestMethod.POST)
+	public String updateUser(@ModelAttribute User user){
+		userService.registerNewUser(user);
+		return "profile";
+	}
+	
+	
+	
 	
 	
 }
